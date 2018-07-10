@@ -1,36 +1,25 @@
-# homebridge-raspberrypi-temperature
-[![npm version](https://badge.fury.io/js/homebridge-raspberrypi-temperature.svg)](https://badge.fury.io/js/homebridge-raspberrypi-temperature)
+# homebridge-raspberrypi
 
-a homebridge plugin that get RaspberryPi CPU temperature.
-
-![](https://raw.githubusercontent.com/YinHangCode/homebridge-raspberrypi-temperature/master/images/RaspberryPi3B.jpg)
+A homebridge plugin that get RaspberryPi metrics, such a CPU temperature and CPU voltage (in mv)
 
 ## Configuration
 ```
 "accessories": [{
-    "accessory": "RaspberryPiTemperature",
-    "name": "RaspberryPi CPU Temperature"
+    "accessory": "RaspberryPi",
+    "name": "Raspberry Pi"
 }]
 ```
-If you want temperature value timing update, you can set 'updateInterval' attribute(unit: milliseconds).   
+If you want value timing update, you can set 'interval' attribute in minutes. Default value is 3 minutes.
+I recommend to use lower interval, than 10 minutes.
+
 ```
 "accessories": [{
-    "accessory": "RaspberryPiTemperature",
-    "name": "RaspberryPi CPU Temperature",
-    "updateInterval": 1000
+    "accessory": "RaspberryPi",
+    "name": "Raspberry Pi",
+    "interval": 1
 }]
 ```
 
 ## Version Logs
-### 0.0.6
-1.update 'package.json'.   
-### 0.0.5
-1.add timing update value features.   
-### 0.0.4
-1.optimized code.   
-### 0.0.3
-1.fixed bug.   
-### 0.0.2
-1.publish to [www.npmjs.com](https://www.npmjs.com).   
 ### 0.0.1
-1.get RaspberryPi CPU temperature.   
+Initial release after fork of [original repository](https://github.com/YinHangCode/homebridge-raspberrypi-temperature)
