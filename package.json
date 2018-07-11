@@ -22,6 +22,8 @@
     "homebridge": ">=0.4.1"
   },
   "dependencies": {
-    "homebridge-lib": "^1.0.5"
+    "homebridge-lib": "^1.0.5",
+    "fakegato-history": "~0.5.2",
+    "moment": "*"
   }
 }
