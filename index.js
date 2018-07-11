@@ -7,7 +7,7 @@ const PiTemperature = require('./pitemperature').RaspberryPiTemperature;
 const PiVoltage     = require('./pivoltage').RaspberryPiVoltage;
 
 // Homebridge HAP
-var hap, Accessory, UUIDGen, eve, myhomekit;
+var hap, Accessory, UUIDGen, FakeGatoHistoryService, eve, myhomekit;
 
 
 // Module exports
@@ -23,6 +23,9 @@ module.exports = function(homebridge) {
     // EVE Definitions
     eve = new homebridgeLib.EveHomeKitTypes(homebridge);
     myhomekit = new homebridgeLib.MyHomeKitTypes(homebridge)
+
+    // FakeGato History Service
+    FakeGatoHistoryService = require('fakegato-history')(homebridge);
 
     homebridge.registerAccessory('homebridge-raspberrypi', 'RaspberryPi', RaspberryPi);
 }
@@ -52,16 +55,19 @@ RaspberryPi.prototype = {
         var infoService         = raspberryPiHardware.getService(hap);
 
         var mainService = new myhomekit.Service.Resource(this.name);
+        mainService.log = this.log;
 
         var raspberryPiTemperature = new PiTemperature(this.log, this.config);
-        mainService = raspberryPiTemperature.addService(mainService, hap);
+        mainService = raspberryPiTemperature.addService(mainService, hap, FakeGatoHistoryService);
+        var temperatureHistoryService = raspberryPiTemperature.getHistoryService();
 
         var raspberryPiVoltage = new PiVoltage(this.log, this.config);
         mainService = raspberryPiVoltage.addService(mainService, hap, eve);
 
         return [
             infoService,
-            mainService
+            mainService,
+            temperatureHistoryService
         ];
     }
 }

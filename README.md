@@ -1,6 +1,15 @@
 # homebridge-raspberrypi
 
+[![npm version](https://badge.fury.io/js/homebridge-raspberrypi.svg)](https://badge.fury.io/js/homebridge-raspberrypi)
+
 A homebridge plugin that get RaspberryPi metrics, such a CPU temperature and CPU voltage (in mv)
+
+## Requirements
+
+To monitor temperature and voltage, following Raspbian packages are required:
+```
+libraspberrypi-bin
+```
 
 ## Configuration
 ```
