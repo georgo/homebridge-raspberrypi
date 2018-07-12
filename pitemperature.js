@@ -10,12 +10,12 @@ var mainService;
 
 // Module exports
 module.exports = {
-    RaspberryPiTemperature: RaspberryPiTemperature
+    PiTemperature: PiTemperature
 };
 
 
 // Raspberry Pi Temperature
-function RaspberryPiTemperature(log, config) {
+function PiTemperature(log, config) {
     // Configuration values
     config              = config || {};
     this.log            = log || console;
@@ -25,7 +25,7 @@ function RaspberryPiTemperature(log, config) {
     this.interval       = ('interval' in config ? parseInt(config['interval']) : 3);
 }
 
-RaspberryPiTemperature.prototype = {
+PiTemperature.prototype = {
      // Read information about Raspberry Pi's temperature
     getTemperature: function(callback) {
         try {
@@ -70,8 +70,8 @@ RaspberryPiTemperature.prototype = {
     },
     // Add homebridge temperature service
     addService: function(_mainService, hap, FakeGatoHistoryService) {
-        mainService            = _mainService;
-        Characteristic         = hap.Characteristic;
+        mainService    = _mainService;
+        Characteristic = hap.Characteristic;
         // Add temperature Service
         mainService
             .addCharacteristic(Characteristic.CurrentTemperature)

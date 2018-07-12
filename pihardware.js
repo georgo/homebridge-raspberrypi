@@ -8,11 +8,11 @@ var Service, Characteristic;
 
 // Module exports
 module.exports = {
-    RaspberryPiHardware: RaspberryPiHardware
+    PiHardware: PiHardware
 };
 
 // Raspberry Pi Hardware
-function RaspberryPiHardware(log, config) {
+function PiHardware(log, config) {
     // Package version
     this.version     = packageFile.version;
     // Configuration values
@@ -27,7 +27,7 @@ function RaspberryPiHardware(log, config) {
     this.firmware     = 'Default-Firmware';
 }
 
-RaspberryPiHardware.prototype = {
+PiHardware.prototype = {
      // Read information about Raspberry Pi's hardware
     getInfo: function() {
         var cpuInfoData = fs.readFileSync(this.cpuInfoPath, 'utf-8');
@@ -61,7 +61,7 @@ RaspberryPiHardware.prototype = {
         }
     },
     // Get Homebridge Info service
-    getService: function(hap) {
+    getService: function(hap, subtype) {
         Service        = hap.Service;
         Characteristic = hap.Characteristic;
         // Load hardware information
@@ -72,7 +72,7 @@ RaspberryPiHardware.prototype = {
         infoService
             .setCharacteristic(Characteristic.Manufacturer    , this.manufacturer)
             .setCharacteristic(Characteristic.Model           , this.model)
-            .setCharacteristic(Characteristic.SerialNumber    , this.serial)
+            .setCharacteristic(Characteristic.SerialNumber    , this.serial + (subtype ? '.'+ subtype : ''))
             .setCharacteristic(Characteristic.HardwareRevision, this.firmware)
             .setCharacteristic(Characteristic.FirmwareRevision, this.version);
         return infoService;

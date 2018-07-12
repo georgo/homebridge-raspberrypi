@@ -2,9 +2,8 @@
 const fs = require('fs');
 const homebridgeLib = require('homebridge-lib');
 // Internal dependencies
-const PiHardware    = require('./pihardware').RaspberryPiHardware;
-const PiTemperature = require('./pitemperature').RaspberryPiTemperature;
-const PiVoltage     = require('./pivoltage').RaspberryPiVoltage;
+const RaspberryPi = require('./raspberrypi').RaspberryPi;
+const RaspberryPiLowVoltage = require('./raspberrypi').RaspberryPiLowVoltage;
 
 // Homebridge HAP
 var hap, Accessory, UUIDGen, FakeGatoHistoryService, eve, myhomekit;
@@ -28,6 +27,7 @@ module.exports = function(homebridge) {
     FakeGatoHistoryService = require('fakegato-history')(homebridge);
 
     homebridge.registerAccessory('homebridge-raspberrypi', 'RaspberryPi', RaspberryPi);
+    homebridge.registerAccessory('homebridge-raspberrypi-lowvoltage', 'RaspberryPiLowVoltage', RaspberryPiLowVoltage);
 }
 
 function isConfig(configFile, type, name) {
@@ -43,31 +43,3 @@ function isConfig(configFile, type, name) {
     return false;
 }
 
-function RaspberryPi(log, config) {
-    this.log    = log || console;
-    this.config = config || {};
-    this.name   = config['name'] || 'Raspberry Pi';
-}
-
-RaspberryPi.prototype = {
-    getServices: function() {
-        var raspberryPiHardware = new PiHardware(this.log, this.config);
-        var infoService         = raspberryPiHardware.getService(hap);
-
-        var mainService = new myhomekit.Service.Resource(this.name);
-        mainService.log = this.log;
-
-        var raspberryPiTemperature = new PiTemperature(this.log, this.config);
-        mainService = raspberryPiTemperature.addService(mainService, hap, FakeGatoHistoryService);
-        var temperatureHistoryService = raspberryPiTemperature.getHistoryService();
-
-        var raspberryPiVoltage = new PiVoltage(this.log, this.config);
-        mainService = raspberryPiVoltage.addService(mainService, hap, eve);
-
-        return [
-            infoService,
-            mainService,
-            temperatureHistoryService
-        ];
-    }
-}

@@ -9,12 +9,12 @@ var mainService;
 
 // Module exports
 module.exports = {
-    RaspberryPiVoltage: RaspberryPiVoltage
+    PiVoltage: PiVoltage
 };
 
 
 // Raspberry Pi Voltage
-function RaspberryPiVoltage(log, config) {
+function PiVoltage(log, config) {
     // Configuration values
     config            = config || {};
     this.log          = log || console;
@@ -23,7 +23,7 @@ function RaspberryPiVoltage(log, config) {
     this.interval     = ('interval' in config ? parseInt(config['interval']) : 3);    
 }
 
-RaspberryPiVoltage.prototype = {
+PiVoltage.prototype = {
      // Read information about Raspberry Pi's voltage
     getVoltage: function() {
         try {
