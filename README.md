@@ -11,6 +11,8 @@ To monitor temperature and voltage, following Raspbian packages are required:
 libraspberrypi-bin
 ```
 
+Don't forget to assign `homebridge` user to `video` group.
+
 ## Configuration
 ```
 "accessories": [{
@@ -30,5 +32,7 @@ I recommend to use lower interval, than 10 minutes.
 ```
 
 ## Version Logs
+### 0.0.2
+Added support for temperature history
 ### 0.0.1
 Initial release after fork of [original repository](https://github.com/YinHangCode/homebridge-raspberrypi-temperature)
