@@ -69,12 +69,16 @@ RaspberryPiTemperature.prototype = {
         });
     },
     // Add homebridge temperature service
-    addService: function(_mainService, hap, FakeGatoHistoryService) {
+    addService: function(_mainService, hap, FakeGatoHistoryService, eveSupport) {
         mainService            = _mainService;
         Characteristic         = hap.Characteristic;
-        // Add temperature Service
+        // Add Temperature Service
+        if (eveSupport) {
+            mainService
+                .addCharacteristic(Characteristic.CurrentTemperature);
+        }
         mainService
-            .addCharacteristic(Characteristic.CurrentTemperature)
+            .getCharacteristic(Characteristic.CurrentTemperature)
             .setProps({
                 format: Characteristic.Formats.FLOAT,
                 minValue: 0,

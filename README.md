@@ -21,7 +21,7 @@ Don't forget to assign `homebridge` user to `video` group.
 }]
 ```
 If you want value timing update, you can set 'interval' attribute in minutes. Default value is 3 minutes.
-I recommend to use lower interval, than 10 minutes.
+I recommend to use lower interval than 10 minutes.
 
 ```
 "accessories": [{
@@ -31,7 +31,19 @@ I recommend to use lower interval, than 10 minutes.
 }]
 ```
 
+By default, basic Apple Home app is supported. You can change behavior in Eve app with parameter `homeSupport`. With value `eve`, voltage will be displayed in Eve application along with temperature in room overview, but nothing will be visible in Apple Home app.
+
+```
+"accessories": [{
+    "accessory": "RaspberryPi",
+    "name": "Raspberry Pi",
+    "homeSupport": "eve"
+}]
+```
+
 ## Version Logs
+### 0.0.3
+Added support for Apple Home app (enabled by default)
 ### 0.0.2
 Added support for temperature history
 ### 0.0.1

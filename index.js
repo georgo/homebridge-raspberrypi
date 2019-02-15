@@ -44,9 +44,10 @@ function isConfig(configFile, type, name) {
 }
 
 function RaspberryPi(log, config) {
-    this.log    = log || console;
-    this.config = config || {};
-    this.name   = config['name'] || 'Raspberry Pi';
+    this.log         = log || console;
+    this.config      = config || {};
+    this.name        = config['name'] || 'Raspberry Pi';
+    this.homeSupport = config['homeSupport'] || 'normal';
 }
 
 RaspberryPi.prototype = {
@@ -54,11 +55,16 @@ RaspberryPi.prototype = {
         var raspberryPiHardware = new PiHardware(this.log, this.config);
         var infoService         = raspberryPiHardware.getService(hap);
 
-        var mainService = new myhomekit.Service.Resource(this.name);
+        var mainService;
+        if (this.homeSupport != 'eve') {
+            mainService = new hap.Service.TemperatureSensor(this.name);
+        } else {
+            mainService = new myhomekit.Service.Resource(this.name);
+        }
         mainService.log = this.log;
 
         var raspberryPiTemperature = new PiTemperature(this.log, this.config);
-        mainService = raspberryPiTemperature.addService(mainService, hap, FakeGatoHistoryService);
+        mainService = raspberryPiTemperature.addService(mainService, hap, FakeGatoHistoryService, this.homeSupport == 'eve');
         var temperatureHistoryService = raspberryPiTemperature.getHistoryService();
 
         var raspberryPiVoltage = new PiVoltage(this.log, this.config);
