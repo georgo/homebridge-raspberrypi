@@ -88,7 +88,9 @@ RaspberryPiTemperature.prototype = {
             .on('get', this.getTemperature.bind(this));
 
         // Temperature history
-        this.historyService = new FakeGatoHistoryService('weather', mainService, 4032);
+        this.historyService = new FakeGatoHistoryService('weather', mainService, {
+            storage: "fs"
+        });
         // Initially get temperature
         this.getTemperature(this.setTemperature);
         // Set interval to get temperature
