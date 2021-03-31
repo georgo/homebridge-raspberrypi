@@ -42,6 +42,8 @@ By default, basic Apple Home app is supported. You can change behavior in Eve ap
 ```
 
 ## Version Logs
+### 0.0.4
+Store temperature history to filesystem
 ### 0.0.3
 Added support for Apple Home app (enabled by default)
 ### 0.0.2
